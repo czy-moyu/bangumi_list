@@ -2,7 +2,7 @@
     <div class="">
         <el-card shadow class="card-item card-r card-radius" :body-style="{ padding: '0px' }">
             <div class="bangumi-image">
-                <div :ss="imgSrc" :style="{backgroundImage: `url(${imgSrc})`}"></div>
+                <div :ss="imgSrc" :style="{backgroundImage: `url(${imgSrc.replace(/ /g,'%20')})`}"></div>
             </div>
         </el-card>
     </div>
