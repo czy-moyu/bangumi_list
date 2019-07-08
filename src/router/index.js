@@ -7,8 +7,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: resolve => require(['@/pages/Home'], resolve)
+      component: resolve => require(['@/pages/Home'], resolve),
+      children: [{
+                path: ':week',
+                name: 'week',
+                component: resolve => require(['@/components/CardGroup'], resolve),
+            },{
+                path: '',
+                name: 'week_default',
+                component: resolve => require(['@/components/CardGroup'], resolve),
+            }]
     }
   ]
 })
