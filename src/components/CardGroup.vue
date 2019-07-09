@@ -15,7 +15,7 @@
             <div v-for="(item, i) in bangumiItem" :key="i">
                 <transition name="bounceUp">
                     <el-col v-if="item.show" :xs="12" :sm="8" :md="8" :lg="6" :key="i">
-                        <Card :img-src="item.imgSrc" />
+                        <Card :img-src="item.imgSrc" :time="item.time" />
                     </el-col>
                 </transition>
             </div>
@@ -135,7 +135,6 @@ export default {
 
             // 一个个让卡片上浮
             this.name = this.week[this.current].fullName
-            console.log(this.bangumiItem)
             let count = 0
             let appendItem = setInterval(() => {
                 if (!this.bangumiItem[count]) {
@@ -154,6 +153,7 @@ export default {
                     imgSrc: require('@/assets/cover/' + i.name + i.img.slice(-4)),
                     show: false,
                     name: i.name,
+                    time: `${i.date}(${this.week[this.current].name.slice(-1)}) ${i.time}`,
                 })
             }
         },
@@ -174,13 +174,13 @@ export default {
             const url = 'https://acgntaiwan.github.io/Anime-List/anime-data/anime2019.07.json'
             let bangumiData = localStorage.getItem("bangumiData")
             if (!bangumiData) {
+                let that = this
                 this.$http.get(url)
                     .then(function(response) {
                         localStorage.setItem('bangumiData', JSON.stringify(response))
-                        bangumiData = localStorage.getItem("bangumiData")
-                        bangumiData = JSON.parse(bangumiData);
-                        this.filterBangumi(bangumiData.data)
-                        this.floatingUp()
+                        bangumiData = response
+                        that.filterBangumi(bangumiData.data)
+                        that.floatingUp()
                     })
                     .catch(function(error) {
                         console.log(error)
@@ -219,5 +219,6 @@ export default {
     font-weight: 400;
     color: white;
     line-height: 30px;
+    user-select: none;
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
     <div >
         <el-row>
-            <el-col @click.native.stop="onBefore" :span="5" style="min-height: 1000px;">
+            <el-col @click.native.stop="onBefore" :span="5" style="min-height: 50vh;">
             </el-col>
             <el-col class="middle-view" :span="14" :offset="0">
                 <div class="overflow">
                     <router-view />
                 </div>
             </el-col>
-            <el-col @click.native.stop="onAfter" :span="5" style="min-height: 1000px;">
+            <el-col @click.native.stop="onAfter" :span="5" style="min-height: 50vh;">
             </el-col>
         </el-row>
     </div>
@@ -26,9 +26,13 @@ export default {
     methods: {
 
         onBefore: function() {
+
+            if (!this.$isPc()) return
             this.beforeDay()
         },
         onAfter: function() {
+
+            if (!this.$isPc()) return
             this.afterDay()
         },
         afterDay() {
@@ -119,8 +123,10 @@ export default {
         },
     },
     mounted() {
+
         this.$slide(this.afterDay, this.beforeDay)
-        console.log(this.$route.params.week)
+
+        this.$isPc();
     },
     created() {
 

@@ -2,7 +2,12 @@
     <div class="">
         <el-card shadow class="card-item card-r card-radius" :body-style="{ padding: '0px' }">
             <div class="bangumi-image">
-                <div :style="{backgroundImage: `url(${imgSrc.replace(/ /g, '%20')})`}"></div>
+                <div :style="{backgroundImage: `url(${imgSrc.replace(/ /g, '%20')})`}">
+
+                </div>
+                <div class="time">
+                        <span>{{ time }}</span>
+                </div>
             </div>
         </el-card>
     </div>
@@ -15,7 +20,7 @@ export default {
         return {
         }
     },
-    props: ['imgSrc'],
+    props: ['imgSrc', 'time'],
     mounted() {
     }
 }
@@ -35,6 +40,7 @@ export default {
 }
 
 .bangumi-image {
+    position: relative;
     width: 100%;
     border-radius: 10px;
 }
@@ -48,6 +54,27 @@ export default {
     background-repeat:no-repeat
 }
 
+.bangumi-name {
+    background-color: #fff;
+    min-height: 30px;
+    border-radius: 10px;
+}
+
+div.time {
+    position: absolute;
+    bottom: 0px;
+    font-size: 16px;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    min-height: 1px !important;
+    line-height: 30px;
+    color: white;
+    text-shadow: 0 0 2px black;
+    font-family: Roboto,Noto,Helvetica,Arial,sans-serif;
+    user-select: none;
+}
+
 @media only screen and (min-width: 1200px) {
     .bangumi-image div{
         min-height: 20vw;
@@ -58,11 +85,21 @@ export default {
     .bangumi-image div{
         min-height: 40vw;
     }
+
+    div.time {
+    position: absolute;
+    font-size: 12px;
+    bottom: 0px;
+    width: 100%;
+    height: 20px;
+    text-align:center;
+    min-height: 1px;
+    line-height: 20px;
+    color: white;
+    text-shadow: 0 0 1px black;
+    font-family: Roboto,Noto,Helvetica,Arial,sans-serif;
+    user-select: none;
+    }
 }
 
-.bangumi-name {
-    background-color: #fff;
-    min-height: 30px;
-    border-radius: 10px;
-}
 </style>
