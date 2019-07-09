@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <el-row>
             <el-col @click.native.stop="onBefore" :span="5" style="min-height: 50vh;">
             </el-col>
@@ -10,13 +10,16 @@
             </el-col>
             <el-col @click.native.stop="onAfter" :span="5" style="min-height: 50vh;">
             </el-col>
+            <div id="landlord">
+                <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+            </div>
         </el-row>
     </div>
 </template>
 
 <script>
-
 export default {
+
     data() {
 
         return {
@@ -125,8 +128,9 @@ export default {
     mounted() {
 
         this.$slide(this.afterDay, this.beforeDay)
-
         this.$isPc();
+        this.$loadLive2d();
+        loadlive2d("live2d", "./models/kesshouban_v2/model.json");
     },
     created() {
 
@@ -158,5 +162,12 @@ export default {
 .before {
     position: absolute;
     left: 0;
+}
+
+.live2d {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 999;
 }
 </style>

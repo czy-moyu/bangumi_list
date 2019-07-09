@@ -7,6 +7,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import { slide } from './slide'
+import { loadLive2d } from './live2d'
 require('vue2-animate/dist/vue2-animate.min.css')
 
 Vue.use(ElementUI)
@@ -15,6 +16,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.$http = axios
 Vue.prototype.$slide = slide
+Vue.prototype.$loadLive2d = loadLive2d
 
 Vue.prototype.$isPc = function(){
      var userAgentInfo = navigator.userAgent;
