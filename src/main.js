@@ -6,6 +6,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
+import { slide } from './slide'
 require('vue2-animate/dist/vue2-animate.min.css')
 
 Vue.use(ElementUI)
@@ -13,6 +14,7 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 Vue.prototype.$http = axios
+Vue.prototype.$slide = slide
 
 /* eslint-disable no-new */
 new Vue({

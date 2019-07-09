@@ -1,16 +1,21 @@
 <template>
-    <div>
+    <div >
         <el-row>
-            <el-col class="middle-view" :span="14" :offset="5">
+            <el-col @click.native.stop="onBefore" :span="5" style="min-height: 1000px;">
+            </el-col>
+            <el-col class="middle-view" :span="14" :offset="0">
                 <div class="overflow">
                     <router-view />
                 </div>
+            </el-col>
+            <el-col @click.native.stop="onAfter" :span="5" style="min-height: 1000px;">
             </el-col>
         </el-row>
     </div>
 </template>
 
 <script>
+
 export default {
     data() {
 
@@ -19,15 +24,103 @@ export default {
         }
     },
     methods: {
-        beforeDay() {
-            this.$router.push({ path: '/Fri' })
+
+        onBefore: function() {
+            this.beforeDay()
+        },
+        onAfter: function() {
+            this.afterDay()
         },
         afterDay() {
-            this.$router.push({ path: '/Sun' })
-        }
+
+            var tomorrow = !this.$route.params.week ? this.getCurrentWeek(1) : this.switchWeekToTime(this.$route.params.week)
+            console.log(tomorrow)
+            tomorrow = tomorrow + 1 > 6 ? 0 : tomorrow + 1
+            this.$router.push({ path: `/${this.switchTimeToWeek(tomorrow)}` })
+        },
+        beforeDay() {
+
+            var yesterday = !this.$route.params.week ? this.getCurrentWeek(1) : this.switchWeekToTime(this.$route.params.week)
+            console.log(yesterday)
+            yesterday = yesterday - 1 < 0 ? 6 : yesterday - 1
+            this.$router.push({ path: `/${this.switchTimeToWeek(yesterday)}` })
+        },
+        // 将数字转换为日期英文缩写
+        switchTimeToWeek(num) {
+
+            let weekName
+            switch (num) {
+                case 0:
+                    weekName = "Sun";
+                    break;
+                case 1:
+                    weekName = "Mon";
+                    break;
+                case 2:
+                    weekName = "Tues";
+                    break;
+                case 3:
+                    weekName = "Wed";
+                    break;
+                case 4:
+                    weekName = "Thur";
+                    break;
+                case 5:
+                    weekName = "Fri";
+                    break;
+                case 6:
+                    weekName = "Sat";
+                    break;
+                default:
+                    weekName = "error"
+            }
+            return weekName
+        },
+        // 将英文缩写转为数字
+        switchWeekToTime(weekName) {
+
+            let num
+            switch (weekName) {
+                case "Sun":
+                    num = 0;
+                    break;
+                case "Mon":
+                    num = 1;
+                    break;
+                case "Tues":
+                    num = 2;
+                    break;
+                case "Wed":
+                    num = 3;
+                    break;
+                case "Thur":
+                    num = 4;
+                    break;
+                case "Fri":
+                    num = 5;
+                    break;
+                case "Sat":
+                    num = 6;
+                    break;
+                default:
+                    num = 0
+            }
+            return num
+        },
+        // flag为真传数字，假传英文缩写
+        getCurrentWeek: function(flag) {
+
+            const timeStamp = new Date()
+
+            if (flag) {
+                return timeStamp.getDay()
+            }
+            return this.switchTimeToWeek(timeStamp.getDay())
+        },
     },
     mounted() {
-
+        this.$slide(this.afterDay, this.beforeDay)
+        console.log(this.$route.params.week)
     },
     created() {
 
@@ -37,7 +130,9 @@ export default {
 </script>
 
 <style scoped>
-.middle-view {}
+.middle-view {
+    z-index: 10;
+}
 
 .overflow {
     overflow: scroll;
