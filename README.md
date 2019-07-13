@@ -2,6 +2,8 @@
 
 > A list of new bangumi to show
 
+[Demo website](https://moyuyu.xyz)
+
 ## Build Setup
 
 ``` bash
