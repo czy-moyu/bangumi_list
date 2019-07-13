@@ -30,12 +30,12 @@ export default {
 
         onBefore: function() {
 
-            if (!this.$isPc()) return
+            if (!this.$isPc) return
             this.beforeDay()
         },
         onAfter: function() {
 
-            if (!this.$isPc()) return
+            if (!this.$isPc) return
             this.afterDay()
         },
         afterDay() {
@@ -128,7 +128,6 @@ export default {
     mounted() {
 
         this.$slide(this.afterDay, this.beforeDay)
-        this.$isPc();
         this.$loadLive2d();
         loadlive2d("live2d", "./models/kesshouban_v2/model.json");
     },

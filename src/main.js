@@ -18,7 +18,7 @@ Vue.prototype.$http = axios
 Vue.prototype.$slide = slide
 Vue.prototype.$loadLive2d = loadLive2d
 
-Vue.prototype.$isPc = function(){
+Vue.prototype.$isPc = (function(){
      var userAgentInfo = navigator.userAgent;
      var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
      var flag = true;
@@ -26,7 +26,7 @@ Vue.prototype.$isPc = function(){
          if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
      }
      return flag;
-  }
+  })()
 
 /* eslint-disable no-new */
 new Vue({

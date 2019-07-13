@@ -170,29 +170,45 @@ export default {
         refresh: function() {
             // 获取星期参数
             this.current = this.$route.params.week ? this.$route.params.week : this.getCurrentWeek()
-                // 获取今天的所有番剧
-            const url = 'https://acgntaiwan.github.io/Anime-List/anime-data/anime2019.07.json'
+            // 获取今天的所有番剧
             let bangumiData = localStorage.getItem("bangumiData")
-            if (!bangumiData) {
-                let that = this
-                this.$http.get(url)
-                    .then(function(response) {
-                        localStorage.setItem('bangumiData', JSON.stringify(response))
-                        bangumiData = response
-                        that.filterBangumi(bangumiData.data)
-                        that.floatingUp()
-                    })
-                    .catch(function(error) {
-                        console.log(error)
-                    })
-                    .finally(function() {
 
-                    })
+            if (!bangumiData) {
+
+                this.getNewData(bangumiData)
+                return
             } else {
+
                 bangumiData = JSON.parse(bangumiData)
+                let modifiedDate = new Date(bangumiData.headers.expires)
+                let now = new Date()
+                if(modifiedDate.valueOf() > now.valueOf()) {
+                    bangumiData = localStorage.getItem("bangumiData")
+                    bangumiData = JSON.parse(bangumiData)
+                    this.getNewData(bangumiData)
+                    return
+                }
                 this.filterBangumi(bangumiData.data)
                 this.floatingUp()
             }
+        },
+        getNewData: function(bangumiData) {
+
+            const url = 'https://acgntaiwan.github.io/Anime-List/anime-data/anime2019.07.json'
+            let that = this
+            this.$http.get(url)
+                .then(function(response) {
+                    localStorage.setItem('bangumiData', JSON.stringify(response))
+                    bangumiData = response
+                    that.filterBangumi(bangumiData.data)
+                    that.floatingUp()
+                })
+                .catch(function(error) {
+                    console.log(error)
+                })
+                .finally(function() {
+
+                })
         }
     },
     components: {
